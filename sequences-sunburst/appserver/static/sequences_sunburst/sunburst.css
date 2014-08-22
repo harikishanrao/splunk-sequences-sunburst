@@ -1,0 +1,24 @@
+.sunburst {
+  color:#000;
+}
+
+path {
+  stroke: #fff;
+}
+
+.explanation-group {
+    text-anchor: middle;
+}
+
+.percentage-text {
+  font-size: 3em;
+  fill: #222;
+}
+
+.explanationr-text {
+  fill: #444;
+}
+
+.trail-text {
+  fill:#fff;
+}

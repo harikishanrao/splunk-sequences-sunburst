@@ -1,0 +1,38 @@
+<form script="autodiscover.js">
+  <label>Sequence of search commands</label>
+  <description/>
+  <searchTemplate>index=_audit search=* sourcetype="audittrail" user=$user$ | rex field=search "^'?(?P&lt;s&gt;.*)'$" | search s=* | eval x=commands(s) | table x | search x=* | eval x=mvappend(x,"END",null) | eval x=mvindex(x,0,10) | nomv x | rex mode=sed field=x  "s/\\s/-/g" | stats count by x | sort - count | head 10000</searchTemplate>
+  <fieldset submitButton="false">
+    <input type="time" searchWhenChanged="true">
+      <default>
+        <earliestTime>-30d@d</earliestTime>
+        <latestTime>now</latestTime>
+      </default>
+    </input>
+    <input type="dropdown" token="user" searchWhenChanged="true">
+      <label>User</label>
+      <choice value="*">Everyone</choice>
+      <populatingSearch fieldForLabel="user" fieldForValue="user">index=_audit sourcetype=audittrail user=* | stats count by user | fields - count |  sort user</populatingSearch>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <html>
+      <h2>Sequence of search commands</h2>
+      <div id="trail"/>
+      <div id="legend"/>
+      <div id="sunburst" class="splunk-view" 
+          data-require="app/sequences-sunburst/sequences_sunburst/sequences_sunburst"
+          data-options='{
+              "managerid" : "search1",
+              "step_field_name" : "x",
+              "size_field_name" : "count",
+              "height" : "16/9",
+              "explanation_text_line1" : "of searches begins with",
+              "explanation_text_line2" : "this sequence of commands",
+              "trail_element_id" : "trail",
+              "legend_element_id" : "legend"
+             }'/>
+    </html>
+  </row>
+</form>
