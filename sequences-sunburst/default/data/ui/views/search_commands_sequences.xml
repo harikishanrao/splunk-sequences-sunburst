@@ -1,9 +1,10 @@
-<form script="autodiscover.js">
+<form script="autodiscover.js" stylesheet="search_commands_sequences.css">
   <label>Sequence of search commands</label>
   <description/>
   <searchTemplate>index=_audit search=* sourcetype="audittrail" user=$user$ | rex field=search "^'?(?P&lt;s&gt;.*)'$" | search s=* | eval x=commands(s) | table x | search x=* | eval x=mvappend(x,"END",null) | eval x=mvindex(x,0,10) | nomv x | rex mode=sed field=x  "s/\\s/-/g" | stats count by x | sort - count | head 10000</searchTemplate>
   <fieldset submitButton="false">
     <input type="time" searchWhenChanged="true">
+      <label>Timerange</label>
       <default>
         <earliestTime>-30d@d</earliestTime>
         <latestTime>now</latestTime>
@@ -12,7 +13,7 @@
     <input type="dropdown" token="user" searchWhenChanged="true">
       <label>User</label>
       <choice value="*">Everyone</choice>
-      <populatingSearch fieldForLabel="user" fieldForValue="user">index=_audit sourcetype=audittrail user=* | stats count by user | fields - count |  sort user</populatingSearch>
+      <populatingSearch fieldForLabel="user" fieldForValue="user">index=_audit search=* sourcetype=audittrail user=* | stats count by user | fields - count |  sort user</populatingSearch>
       <default>*</default>
     </input>
   </fieldset>
@@ -33,6 +34,14 @@
               "trail_element_id" : "trail",
               "legend_element_id" : "legend"
              }'/>
+    </html>
+  </row>
+  <row>
+    <html>
+      <p class="text-center">
+        <i class="icon-info-circle icon-large"/>
+        You must have access to <code>_audit</code> index to see this example
+      </p>
     </html>
   </row>
 </form>
