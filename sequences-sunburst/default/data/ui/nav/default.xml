@@ -1,3 +1,5 @@
 <nav search_view="search" color="#263248">
   <view name="home" default='true' />
+  <view name="search_commands_sequences" />
+  <view name="dashboards" />
 </nav>
