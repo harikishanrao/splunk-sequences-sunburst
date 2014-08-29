@@ -1,7 +1,7 @@
 <form script="autodiscover.js" stylesheet="search_commands_sequences.css">
   <label>Sequence of search commands</label>
   <description/>
-  <searchTemplate>index=_audit search=* sourcetype="audittrail" user=$user$ | rex field=search "^'?(?P&lt;s&gt;.*)'$" | search s=* | eval x=commands(s) | table x | search x=* | eval x=mvappend(x,"END",null) | eval x=mvindex(x,0,10) | nomv x | rex mode=sed field=x  "s/\\s/-/g" | stats count by x | sort - count | head 10000</searchTemplate>
+  <searchTemplate>index=_audit search=* sourcetype="audittrail" user=$user$ | rex field=search "^'?(?P&lt;s&gt;.*)'$" | search s=* | eval x=commands(s) | table x | search x=* | eval x=mvappend(x,"END",null) | eval x=mvindex(x,0,$max$) | nomv x | rex mode=sed field=x  "s/\\s/-/g" | stats count by x | sort - count | head 10000</searchTemplate>
   <fieldset submitButton="false">
     <input type="time" searchWhenChanged="true">
       <label>Timerange</label>
@@ -15,6 +15,19 @@
       <choice value="*">Everyone</choice>
       <populatingSearch fieldForLabel="user" fieldForValue="user">index=_audit search=* sourcetype=audittrail user=* | stats count by user | fields - count |  sort user</populatingSearch>
       <default>*</default>
+    </input>
+    <input type="dropdown" token="max" searchWhenChanged="true">
+      <label>Show only the first</label>
+      <choice value="500">Show all</choice>
+      <choice value="2">3</choice>
+      <choice value="3">4</choice>
+      <choice value="4">5</choice>
+      <choice value="5">6</choice>
+      <choice value="6">7</choice>
+      <choice value="7">8</choice>
+      <choice value="8">9</choice>
+      <choice value="9">10</choice>
+      <default>6</default>
     </input>
   </fieldset>
   <row>

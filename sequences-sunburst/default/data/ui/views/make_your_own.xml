@@ -1,0 +1,49 @@
+<dashboard script="autodiscover.js">
+  <label>How to make your own</label>
+  <description/>
+  <searchTemplate>|inputlookup visit-sequences.csv</searchTemplate>
+  <row>
+    <html>
+      <h1>How to make your own visualization</h1>
+      <ol>
+        <li>Create a clone of this dashboard</li>
+        <li>Move the dashboard to your app.</li>
+        <li>Copy the 
+        <ul>
+            <li><code>autodiscover.js</code> file,</li>
+            <li><code>sequences_sunburst</code> directory,</li>
+            <li><code>d3</code> directory</li>
+        </ul>
+        from <code>$SPLUNK_HOME/etc/apps/sequences-sunburst/appserver/static</code> to your app's <code>appserver/static</code> directory
+        </li>
+        <li>Change the search string between <code>&lt;searchTemplate&gt;</code> tag in the source xml.<br />
+          Your search have to return 2 fields: <code>steps</code> and <code>count</code><br />
+          In the <code>steps</code> field separate steps name with a "-" (hyphen)<br />
+          Like this:<br />
+          step1-step2-step3-step4
+        </li>
+        <li>Replace the explanation text in the visualization settings</li>
+        <li>Delete this html panel from the source xml</li>
+      </ol>
+    </html>
+  </row>
+  <row>
+    <html>
+      <h2>Sample - webpage visits</h2>
+      <div id="trail"/>
+      <div id="legend"/>
+      <div id="sunburst" class="splunk-view" 
+          data-require="app/sequences-sunburst/sequences_sunburst/sequences_sunburst"
+          data-options='{
+              "managerid" : "search1",
+              "step_field_name" : "steps",
+              "size_field_name" : "count",
+              "height" : "16/9",
+              "explanation_text_line1" : "of visits begin with",
+              "explanation_text_line2" : "this sequence of pages",
+              "trail_element_id" : "trail",
+              "legend_element_id" : "legend"
+             }'/>
+    </html>
+  </row>
+</dashboard>

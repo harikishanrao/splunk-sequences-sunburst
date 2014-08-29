@@ -142,7 +142,6 @@ define(function(require, exports, module) {
             var hier = this.buildHierarchy(data);
             
 
-//           var sunburst_data = nodes;
             sunburst_data = hier;
             return sunburst_data;
         },
