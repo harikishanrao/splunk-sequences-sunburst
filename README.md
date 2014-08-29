@@ -11,15 +11,4 @@ Splunk 6
 
 
 # License
-
-
-
-
-
-
-
- 
-
-
-
-
+MIT
