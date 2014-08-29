@@ -4,9 +4,6 @@
     <html src="welcome.html" />
   </row>
   <row>
-    <html src="toc.html" id="categories"/>
-  </row>
-  <row>
-    <html src="footer.html" />
+    <html src="toc.html" />
   </row>
 </dashboard>
